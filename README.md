@@ -6,14 +6,14 @@
 </p>
 
 <p align="center">
-    <a href="https://packagist.org/packages/defectivecode/skeleton">
-        <img src="https://poser.pugx.org/defectivecode/skeleton/d/total.svg" alt="Total Downloads">
+    <a href="https://packagist.org/packages/defectivecode/faker-storage">
+        <img src="https://poser.pugx.org/defectivecode/faker-storage/d/total.svg" alt="Total Downloads">
     </a>
-    <a href="https://packagist.org/packages/defectivecode/skeleton">
-        <img src="https://poser.pugx.org/defectivecode/skeleton/v/stable.svg" alt="Latest Stable Version">
+    <a href="https://packagist.org/packages/defectivecode/faker-storage">
+        <img src="https://poser.pugx.org/defectivecode/faker-storage/v/stable.svg" alt="Latest Stable Version">
     </a>
-    <a href="https://packagist.org/packages/defectivecode/skeleton">
-        <img src="https://poser.pugx.org/defectivecode/skeleton/license.svg" alt="License">
+    <a href="https://packagist.org/packages/defectivecode/faker-storage">
+        <img src="https://poser.pugx.org/defectivecode/faker-storage/license.svg" alt="License">
     </a>
 </p>
 
@@ -23,7 +23,7 @@
 
 # Documentation
 
-You may read the [documentation on our website](https://www.defectivecode.com/packages/skelton).
+You may read the [documentation on our website](https://www.defectivecode.com/packages/faker-storage).
 
 # Support Guidelines
 
