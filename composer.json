@@ -1,35 +1,39 @@
 {
-    "name": "defectivecode/skeleton",
-    "type": "laravel",
-    "license": "MIT",
-    "autoload": {
-        "psr-4": {
-            "DefectiveCode\\Skeleton\\": "src"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "DefectiveCode\\Skeleton\\Tests\\": "tests"
-        }
-    },
-    "authors": [
-        {
-            "name": "Corey McCormick",
-            "email": "corey@defectivecode.com"
-        }
-    ],
-    "require": {
-        "php": ">=8.2"
-    },
-    "require-dev": {
-        "orchestra/testbench": "^8.3",
-        "nunomaduro/collision": "^7.0",
-        "phpunit/phpunit": "^10.0",
-        "laravel/pint": "^1.8"
-    },
-    "scripts": {
-        "post-autoload-dump": [
-            "@php vendor/bin/testbench package:discover --ansi"
-        ]
+  "name": "defectivecode/faker-storage",
+  "type": "laravel",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "DefectiveCode\\Faker\\": "src"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "DefectiveCode\\Faker\\Tests\\": "tests"
+    }
+  },
+  "authors": [
+    {
+      "name": "Corey McCormick",
+      "email": "corey@defectivecode.com"
+    }
+  ],
+  "require": {
+    "php": ">=8.4",
+    "ext-gd": "*",
+    "league/flysystem": "^3.0",
+    "ramsey/uuid": "^4.9",
+    "fakerphp/faker": "^1.24",
+    "symfony/mime": "^7.3"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^10.0",
+    "laravel/pint": "^1.8",
+    "symfony/var-dumper": "^7.3",
+    "swoole/ide-helper": "^6.0"
+  },
+  "suggest": {
+    "ext-swoole": "Required for Swoole worker support for parallel file generation",
+    "ext-pcntl": "Required for PCNTL worker support for parallel file generation"
+  }
 }
