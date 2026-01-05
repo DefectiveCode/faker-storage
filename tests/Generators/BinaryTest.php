@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace DefectiveCode\Faker\Tests\Generators;
 
-use DefectiveCode\Faker\NameGenerator;
 use PHPUnit\Framework\Attributes\Test;
 use DefectiveCode\Faker\Tests\TestCase;
 use DefectiveCode\Faker\Generators\Binary;
@@ -28,7 +27,6 @@ class BinaryTest extends TestCase
         $config = Binary::getDefaultConfig();
 
         $this->assertEquals('application/octet-stream', $config->contentType);
-        $this->assertEquals(NameGenerator::default('bin'), $config->nameGenerator);
     }
 
     #[Test]

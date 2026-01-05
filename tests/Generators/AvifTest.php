@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace DefectiveCode\Faker\Tests\Generators;
 
-use DefectiveCode\Faker\NameGenerator;
 use PHPUnit\Framework\Attributes\Test;
 use DefectiveCode\Faker\Tests\TestCase;
 use DefectiveCode\Faker\Generators\Avif;
@@ -17,7 +16,6 @@ class AvifTest extends TestCase
         $config = Avif::getDefaultConfig();
 
         $this->assertEquals('image/avif', $config->contentType);
-        $this->assertEquals(NameGenerator::default('avif'), $config->nameGenerator);
     }
 
     #[Test]

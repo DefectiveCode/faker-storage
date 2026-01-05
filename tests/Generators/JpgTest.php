@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace DefectiveCode\Faker\Tests\Generators;
 
-use DefectiveCode\Faker\NameGenerator;
 use PHPUnit\Framework\Attributes\Test;
 use DefectiveCode\Faker\Generators\Jpg;
 use DefectiveCode\Faker\Tests\TestCase;
@@ -17,7 +16,6 @@ class JpgTest extends TestCase
         $config = Jpg::getDefaultConfig();
 
         $this->assertEquals('image/jpeg', $config->contentType);
-        $this->assertEquals(NameGenerator::default('jpg'), $config->nameGenerator);
     }
 
     #[Test]

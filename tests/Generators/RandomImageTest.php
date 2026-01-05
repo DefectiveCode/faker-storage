@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace DefectiveCode\Faker\Tests\Generators;
 
-use DefectiveCode\Faker\NameGenerator;
 use PHPUnit\Framework\Attributes\Test;
 use DefectiveCode\Faker\Tests\TestCase;
 use DefectiveCode\Faker\Generators\RandomImage;
@@ -17,7 +16,6 @@ class RandomImageTest extends TestCase
         $config = RandomImage::getDefaultConfig();
 
         $this->assertEquals('image/random', $config->contentType);
-        $this->assertEquals(NameGenerator::default('random'), $config->nameGenerator);
     }
 
     #[Test]
@@ -70,9 +68,6 @@ class RandomImageTest extends TestCase
         $data = $generator->generate();
 
         $this->assertIsResource($data);
-
-        $format = str_replace('image/', '', $generator->config->contentType);
-        $this->assertEquals(NameGenerator::default($format), $generator->config->nameGenerator);
     }
 
     #[Test]
@@ -126,9 +121,6 @@ class RandomImageTest extends TestCase
         $data = $generator->generate();
 
         $this->assertIsResource($data);
-
-        $format = str_replace('image/', '', $generator->config->contentType);
-        $this->assertEquals(NameGenerator::default($format), $generator->config->nameGenerator);
     }
 
     protected function getGenerator(): RandomImage

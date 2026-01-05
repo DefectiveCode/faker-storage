@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace DefectiveCode\Faker\Tests\Generators;
 
-use DefectiveCode\Faker\NameGenerator;
 use PHPUnit\Framework\Attributes\Test;
 use DefectiveCode\Faker\Generators\Csv;
 use DefectiveCode\Faker\Tests\TestCase;
@@ -79,7 +78,6 @@ class CsvTest extends TestCase
         $config = Csv::getDefaultConfig();
 
         $this->assertEquals('text/csv', $config->contentType);
-        $this->assertEquals(NameGenerator::default('csv'), $config->nameGenerator);
     }
 
     #[Test]

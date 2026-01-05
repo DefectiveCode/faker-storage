@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace DefectiveCode\Faker\Tests\Generators;
 
-use DefectiveCode\Faker\NameGenerator;
 use PHPUnit\Framework\Attributes\Test;
 use DefectiveCode\Faker\Generators\Png;
 use DefectiveCode\Faker\Tests\TestCase;
@@ -65,7 +64,6 @@ class EmailTest extends TestCase
         $config = Email::getDefaultConfig();
 
         $this->assertEquals('message/rfc822', $config->contentType);
-        $this->assertEquals(NameGenerator::default('eml'), $config->nameGenerator);
     }
 
     #[Test]

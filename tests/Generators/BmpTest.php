@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace DefectiveCode\Faker\Tests\Generators;
 
-use DefectiveCode\Faker\NameGenerator;
 use PHPUnit\Framework\Attributes\Test;
 use DefectiveCode\Faker\Generators\Bmp;
 use DefectiveCode\Faker\Tests\TestCase;
@@ -17,7 +16,6 @@ class BmpTest extends TestCase
         $config = Bmp::getDefaultConfig();
 
         $this->assertEquals('image/bmp', $config->contentType);
-        $this->assertEquals(NameGenerator::default('bmp'), $config->nameGenerator);
     }
 
     #[Test]

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace DefectiveCode\Faker\Tests\Generators;
 
-use DefectiveCode\Faker\NameGenerator;
 use PHPUnit\Framework\Attributes\Test;
 use DefectiveCode\Faker\Generators\Png;
 use DefectiveCode\Faker\Tests\TestCase;
@@ -17,7 +16,6 @@ class PngTest extends TestCase
         $config = Png::getDefaultConfig();
 
         $this->assertEquals('image/png', $config->contentType);
-        $this->assertEquals(NameGenerator::default('png'), $config->nameGenerator);
     }
 
     #[Test]

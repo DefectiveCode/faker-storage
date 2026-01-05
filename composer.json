@@ -28,7 +28,7 @@
         "egulias/email-validator": "^4.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^10.0",
+        "phpunit/phpunit": "^12.3.13",
         "laravel/pint": "^1.8",
         "symfony/var-dumper": "^7.3",
         "swoole/ide-helper": "^6.0"

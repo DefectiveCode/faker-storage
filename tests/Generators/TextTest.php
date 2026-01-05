@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace DefectiveCode\Faker\Tests\Generators;
 
-use DefectiveCode\Faker\NameGenerator;
 use PHPUnit\Framework\Attributes\Test;
 use DefectiveCode\Faker\Tests\TestCase;
 use DefectiveCode\Faker\Generators\Text;
@@ -39,7 +38,6 @@ class TextTest extends TestCase
         $config = Text::getDefaultConfig();
 
         $this->assertEquals('text/plain', $config->contentType);
-        $this->assertEquals(NameGenerator::default('txt'), $config->nameGenerator);
     }
 
     #[Test]

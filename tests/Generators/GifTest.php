@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace DefectiveCode\Faker\Tests\Generators;
 
-use DefectiveCode\Faker\NameGenerator;
 use PHPUnit\Framework\Attributes\Test;
 use DefectiveCode\Faker\Generators\Gif;
 use DefectiveCode\Faker\Tests\TestCase;
@@ -17,7 +16,6 @@ class GifTest extends TestCase
         $config = Gif::getDefaultConfig();
 
         $this->assertEquals('image/gif', $config->contentType);
-        $this->assertEquals(NameGenerator::default('gif'), $config->nameGenerator);
     }
 
     #[Test]

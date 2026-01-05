@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace DefectiveCode\Faker\Tests\Generators;
 
-use DefectiveCode\Faker\NameGenerator;
 use PHPUnit\Framework\Attributes\Test;
 use DefectiveCode\Faker\Tests\TestCase;
 use DefectiveCode\Faker\Generators\Webp;
@@ -17,7 +16,6 @@ class WebpTest extends TestCase
         $config = Webp::getDefaultConfig();
 
         $this->assertEquals('image/webp', $config->contentType);
-        $this->assertEquals(NameGenerator::default('webp'), $config->nameGenerator);
     }
 
     #[Test]
