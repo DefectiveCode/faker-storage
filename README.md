@@ -5,21 +5,90 @@
     </picture>
 </p>
 
-<p align="center">
-    <a href="https://packagist.org/packages/defectivecode/faker-storage">
-        <img src="https://poser.pugx.org/defectivecode/faker-storage/d/total.svg" alt="Total Downloads">
-    </a>
-    <a href="https://packagist.org/packages/defectivecode/faker-storage">
-        <img src="https://poser.pugx.org/defectivecode/faker-storage/v/stable.svg" alt="Latest Stable Version">
-    </a>
-    <a href="https://packagist.org/packages/defectivecode/faker-storage">
-        <img src="https://poser.pugx.org/defectivecode/faker-storage/license.svg" alt="License">
-    </a>
-</p>
+[English](https://www.defectivecode.com/packages/faker-storage/en) |
+[العربية](https://www.defectivecode.com/packages/faker-storage/ar) |
+[বাংলা](https://www.defectivecode.com/packages/faker-storage/bn) |
+[Bosanski](https://www.defectivecode.com/packages/faker-storage/bs) |
+[Deutsch](https://www.defectivecode.com/packages/faker-storage/de) |
+[Español](https://www.defectivecode.com/packages/faker-storage/es) |
+[Français](https://www.defectivecode.com/packages/faker-storage/fr) |
+[हिन्दी](https://www.defectivecode.com/packages/faker-storage/hi) |
+[Italiano](https://www.defectivecode.com/packages/faker-storage/it) |
+[日本語](https://www.defectivecode.com/packages/faker-storage/ja) |
+[한국어](https://www.defectivecode.com/packages/faker-storage/ko) |
+[मराठी](https://www.defectivecode.com/packages/faker-storage/mr) |
+[Português](https://www.defectivecode.com/packages/faker-storage/pt) |
+[Русский](https://www.defectivecode.com/packages/faker-storage/ru) |
+[Kiswahili](https://www.defectivecode.com/packages/faker-storage/sw) |
+[தமிழ்](https://www.defectivecode.com/packages/faker-storage/ta) |
+[తెలుగు](https://www.defectivecode.com/packages/faker-storage/te) |
+[Türkçe](https://www.defectivecode.com/packages/faker-storage/tr) |
+[اردو](https://www.defectivecode.com/packages/faker-storage/ur) |
+[Tiếng Việt](https://www.defectivecode.com/packages/faker-storage/vi) |
+[中文](https://www.defectivecode.com/packages/faker-storage/zh)
 
 # Introduction
 
-...
+**Faker Storage** is a high-performance PHP package designed to generate and store large volumes of fake data files
+efficiently. Built with concurrency in mind, it leverages Swoole or PCNTL to generate thousands of files in parallel,
+making it ideal for load testing, development environments, and storage system benchmarking.
+
+The package provides a fluent API for generating various file types including images (PNG, JPG, GIF, BMP, WEBP, AVIF),
+text files, CSV files, binary data, and RFC822-compliant emails. Each generator produces deterministic output when
+seeded, ensuring reproducible test data across environments.
+
+## Key Features
+
+-   **High-Performance Concurrency**: Automatic selection between Swoole (coroutines) and PCNTL (process forking) for
+    parallel file generation
+-   **Multiple File Generators**: Built-in support for images, text, CSV, binary, and email files
+-   **Deterministic Output**: Seed-based generation ensures reproducible results
+-   **Flexible Storage**: Works with any League Flysystem adapter (local, S3, etc.)
+-   **Customizable File Naming**: Closure-based name generation with full control
+-   **Image Support**: Multiple formats with configurable dimensions and compression
+-   **Email Generation**: RFC822-compliant emails with attachments and MIME support
+
+## Example
+
+```php
+use DefectiveCode\Faker\Faker;
+use League\Flysystem\Filesystem;
+use DefectiveCode\Faker\Generators\Png;
+use League\Flysystem\Local\LocalFilesystemAdapter;
+
+// Generate 1000 PNG images with 10 concurrent workers
+Faker::make(Png::class)
+    ->width(800, 1920)
+    ->height(600, 1080)
+    ->toDisk(new Filesystem(new LocalFilesystemAdapter('/path/to/storage')))
+    ->basePath('images')
+    ->count(1000)
+    ->concurrency(10)
+    ->seed(42)
+    ->generate();
+
+// Generate CSV files
+use DefectiveCode\Faker\Generators\Csv;
+
+Faker::make(Csv::class)
+    ->columns(5, 10)
+    ->rows(100, 500)
+    ->delimiter(',')
+    ->toDisk(new Filesystem(new LocalFilesystemAdapter('/path/to/storage')))
+    ->count(50)
+    ->generate();
+
+// Generate emails with attachments
+use DefectiveCode\Faker\Generators\Email;
+
+Faker::make(Email::class)
+    ->paragraphs(3, 5)
+    ->sentences(2, 4)
+    ->withAttachment(Png::class, 1, 3)
+    ->toDisk(new Filesystem(new LocalFilesystemAdapter('/path/to/storage')))
+    ->count(100)
+    ->generate();
+```
 
 # Documentation
 
