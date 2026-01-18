@@ -10,14 +10,14 @@ seeded, ensuring reproducible test data across environments.
 
 ## Key Features
 
--   **High-Performance Concurrency**: Automatic selection between Swoole (coroutines) and PCNTL (process forking) for
-    parallel file generation
--   **Multiple File Generators**: Built-in support for images, text, CSV, binary, and email files
--   **Deterministic Output**: Seed-based generation ensures reproducible results
--   **Flexible Storage**: Works with any League Flysystem adapter (local, S3, etc.)
--   **Customizable File Naming**: Closure-based name generation with full control
--   **Image Support**: Multiple formats with configurable dimensions and compression
--   **Email Generation**: RFC822-compliant emails with attachments and MIME support
+- **High-Performance Concurrency**: Automatic selection between Swoole (coroutines) and PCNTL (process forking) for
+  parallel file generation
+- **Multiple File Generators**: Built-in support for images, text, CSV, binary, and email files
+- **Deterministic Output**: Seed-based generation ensures reproducible results
+- **Flexible Storage**: Works with any League Flysystem adapter (local, S3, etc.)
+- **Customizable File Naming**: Closure-based name generation with full control
+- **Image Support**: Multiple formats with configurable dimensions and compression
+- **Email Generation**: RFC822-compliant emails with attachments and MIME support
 
 ## Example
 
@@ -71,10 +71,10 @@ composer require defectivecode/faker-storage
 
 ## Requirements
 
--   PHP >= 8.4
--   ext-gd (for image generation)
--   ext-swoole (optional, for better performance)
--   ext-pcntl (fallback for concurrency)
+- PHP >= 8.4
+- ext-gd (for image generation)
+- ext-swoole (optional, for better performance)
+- ext-pcntl (fallback for concurrency)
 
 ## Optional Dependencies
 
@@ -436,11 +436,11 @@ Faker::make(Email::class)
 
 Generated emails include:
 
--   `To`: Random name and email
--   `From`: Random name and email
--   `Subject`: Random sentence
--   `Date`: Current timestamp
--   `Message-ID`: Deterministic ID based on seed
+- `To`: Random name and email
+- `From`: Random name and email
+- `Subject`: Random sentence
+- `Date`: Current timestamp
+- `Message-ID`: Deterministic ID based on seed
 
 ### Email with Attachments
 
