@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace DefectiveCode\Faker\Tests;
 
+use ReflectionClass;
 use InvalidArgumentException;
 use DefectiveCode\Faker\NameGenerator;
 use PHPUnit\Framework\Attributes\Test;
@@ -76,9 +77,8 @@ class NameGeneratorTest extends TestCase
     #[Test]
     public function defaultThrowsExceptionWhenDefaultIsInvalid(): void
     {
-        $reflection = new \ReflectionClass(NameGenerator::class);
+        $reflection = new ReflectionClass(NameGenerator::class);
         $property = $reflection->getProperty('currentGenerator');
-        $property->setAccessible(true);
         $property->setValue(null, 'invalid');
 
         $this->expectException(InvalidArgumentException::class);

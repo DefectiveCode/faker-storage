@@ -71,7 +71,7 @@ composer require defectivecode/faker-storage
 
 ## Requirements
 
-- PHP >= 8.4
+- PHP >= 8.5
 - ext-gd (for image generation)
 - ext-swoole (optional, for better performance)
 - ext-pcntl (fallback for concurrency)
@@ -179,11 +179,13 @@ Control parallel execution with the `concurrency()` method:
 ```php
 // Use 10 worker threads/processes
 Faker::make(Png::class)
+    ->toDisk($filesystem)
     ->concurrency(10)
     ->generate();
 
 // Swoole-specific: Set both threads and coroutines per thread
 Faker::make(Png::class)
+    ->toDisk($filesystem)
     ->concurrency(threads: 4, coroutines: 8)  // 4 workers, 8 coroutines each
     ->generate();
 ```
@@ -196,7 +198,9 @@ By default, files are named using UUID v4:
 
 ```php
 // Generates: e7f0a8d3-5c2b-4f9e-8a1d-3b4c5d6e7f8a.png
-Faker::make(Png::class)->generate();
+Faker::make(Png::class)
+    ->toDisk($filesystem)
+    ->generate();
 ```
 
 ### Built-in Name Generators
@@ -239,6 +243,7 @@ Set a seed to generate the same files across runs:
 
 ```php
 Faker::make(Png::class)
+    ->toDisk($filesystem)
     ->seed(42)
     ->count(10)
     ->generate();
@@ -452,6 +457,7 @@ use DefectiveCode\Faker\Generators\Png;
 use DefectiveCode\Faker\Generators\Pdf;
 
 Faker::make(Email::class)
+    ->toDisk($filesystem)
     ->withAttachment(Png::class, 1, 3)  // 1-3 PNG attachments
     ->generate();
 
@@ -460,6 +466,7 @@ $pngGenerator = new Png(Png::getDefaultConfig());
 $pngGenerator->width(400, 800)->height(300, 600);
 
 Faker::make(Email::class)
+    ->toDisk($filesystem)
     ->withAttachment($pngGenerator, 2, 5)
     ->generate();
 ```
@@ -648,5 +655,7 @@ Faker::make(Png::class)
 Execute file generation:
 
 ```php
-Faker::make(Png::class)->generate();
+Faker::make(Png::class)
+    ->toDisk($filesystem)
+    ->generate();
 ```

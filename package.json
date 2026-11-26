@@ -1,7 +1,15 @@
 {
-    "devDependencies": {
-        "@prettier/plugin-xml": "^3.4.2",
-        "prettier": "^3.8.0",
-        "prettier-package-json": "^2.8.0"
-    }
+  "private": true,
+  "name": "faker-storage",
+  "scripts": {
+    "format": "bun run --bun prettier-package-json --write package.json && bun run --bun prettier --write .",
+    "format:check": "bun run --bun prettier --check .",
+    "package:check": "bun run --bun prettier-package-json --list-different package.json"
+  },
+  "devDependencies": {
+    "@prettier/plugin-xml": "^3.4.2",
+    "prettier": "^3.10.1",
+    "prettier-package-json": "^2.8.0"
+  },
+  "packageManager": "bun@1.4.5"
 }

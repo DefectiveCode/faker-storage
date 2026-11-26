@@ -8,6 +8,7 @@ use DefectiveCode\Faker\Generators\Generator;
 
 class EmailConfig extends Config
 {
+    /** @var class-string<Generator>|Generator */
     public string|Generator $attachmentGenerator;
 
     public int $minAttachments = 1;

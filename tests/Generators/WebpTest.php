@@ -28,8 +28,6 @@ class WebpTest extends TestCase
 
         $data = $generator->generate();
 
-        $this->assertIsResource($data);
-
         rewind($data);
 
         $contents = stream_get_contents($data);

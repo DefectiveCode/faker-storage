@@ -50,8 +50,6 @@ class TextTest extends TestCase
 
         $data = $generator->generate();
 
-        $this->assertIsResource($data);
-
         rewind($data);
 
         $this->assertEquals("Rerum quaerat ut fuga non quibusdam itaque ut. At quia quibusdam commodi.\n", stream_get_contents($data));

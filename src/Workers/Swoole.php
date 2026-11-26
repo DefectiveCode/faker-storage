@@ -10,9 +10,13 @@ use Swoole\Coroutine;
 use Swoole\Process\Pool;
 use DefectiveCode\Faker\Faker;
 use Swoole\Coroutine\WaitGroup;
+use DefectiveCode\Faker\Generators\Generator;
 
 class Swoole implements Worker
 {
+    /**
+     * @param  Faker<covariant Generator>  $faker
+     */
     public function run(Faker $faker): void
     {
         $completedFiles = new Atomic(0);
@@ -25,7 +29,7 @@ class Swoole implements Worker
             enable_coroutine: true
         );
 
-        $pool->on('WorkerStart', function ($pool) use ($completedFiles, $totalFiles, $finishedWorkers, $threads, $faker): void {
+        $pool->on('WorkerStart', function (Pool $pool) use ($completedFiles, $totalFiles, $finishedWorkers, $threads, $faker): void {
             Runtime::enableCoroutine();
 
             $totalCoroutines = $faker->generator->config->coroutines ?? $threads * 4;

@@ -76,11 +76,16 @@ class Csv implements Generator
     {
         $headerCount = mt_rand($this->config->minColumns, $this->config->maxColumns);
 
+        /** @var resource $stream */
         $stream = fopen('php://temp', 'w+');
-        $this->writeRow($stream, $this->faker->unique()->words($headerCount));
+        /** @var list<string> $header */
+        $header = $this->faker->unique()->words($headerCount);
+        $this->writeRow($stream, $header);
 
         for ($rows = 0; $rows < mt_rand($this->config->minRows, $this->config->maxRows); $rows++) {
-            $this->writeRow($stream, $this->faker->words($headerCount));
+            /** @var list<string> $row */
+            $row = $this->faker->words($headerCount);
+            $this->writeRow($stream, $row);
         }
 
         return $stream;
@@ -88,6 +93,7 @@ class Csv implements Generator
 
     /**
      * @param  resource  $stream
+     * @param  list<string>  $fields
      */
     protected function writeRow($stream, array $fields): void
     {

@@ -53,8 +53,6 @@ class ImageTest extends TestCase
 
         $data = $generator->generate();
 
-        $this->assertIsResource($data);
-
         rewind($data);
 
         $contents = stream_get_contents($data);
@@ -72,8 +70,6 @@ class ImageTest extends TestCase
         $generator->grid(5);
 
         $data = $generator->generate();
-
-        $this->assertIsResource($data);
 
         rewind($data);
 

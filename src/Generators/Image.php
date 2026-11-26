@@ -18,6 +18,9 @@ abstract class Image implements Generator
      */
     public function __construct(public Config $config) {}
 
+    /**
+     * @return callable-string
+     */
     abstract protected function imageCreator(): string;
 
     public function grid(int $size): self
@@ -27,6 +30,11 @@ abstract class Image implements Generator
         return $this;
     }
 
+    /**
+     * @param  positive-int  $minHeight
+     * @param  positive-int  $maxHeight
+     * @return $this
+     */
     public function height(int $minHeight, int $maxHeight): self
     {
         $this->config->minHeight = $minHeight;
@@ -35,6 +43,11 @@ abstract class Image implements Generator
         return $this;
     }
 
+    /**
+     * @param  positive-int  $minWidth
+     * @param  positive-int  $maxWidth
+     * @return $this
+     */
     public function width(int $minWidth, int $maxWidth): self
     {
         $this->config->minWidth = $minWidth;
@@ -54,9 +67,9 @@ abstract class Image implements Generator
             ? $this->generateGridImage($image, $width, $height)
             : $this->generateRandomImage($image, $width, $height);
 
+        /** @var resource $stream */
         $stream = fopen('php://temp', 'w+');
         call_user_func($this->imageCreator(), $image, $stream);
-        imagedestroy($image);
 
         return $stream;
     }
@@ -70,7 +83,7 @@ abstract class Image implements Generator
 
         for ($row = 0; $row < $width; $row++) {
             for ($column = 0; $column < $height; $column++) {
-                $color = imagecolorallocatealpha(
+                $color = (int) imagecolorallocatealpha(
                     $image,
                     mt_rand(0, 255),
                     mt_rand(0, 255),
@@ -104,10 +117,10 @@ abstract class Image implements Generator
             $image,
             0,
             0,
-            imagecolorallocate($image, 240, 240, 240)
+            (int) imagecolorallocate($image, 240, 240, 240)
         );
 
-        $foregroundColor = imagecolorallocate(
+        $foregroundColor = (int) imagecolorallocate(
             $image,
             mt_rand(0, 255),
             mt_rand(0, 255),

@@ -76,8 +76,6 @@ class EmailTest extends TestCase
 
         $data = $generator->generate();
 
-        $this->assertIsResource($data);
-
         rewind($data);
 
         $contents = stream_get_contents($data);
@@ -106,8 +104,6 @@ class EmailTest extends TestCase
         $generator->withAttachment(Png::class, 1, 1);
 
         $data = $generator->generate();
-
-        $this->assertIsResource($data);
 
         rewind($data);
 

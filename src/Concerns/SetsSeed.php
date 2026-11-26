@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace DefectiveCode\Faker\Concerns;
 
+use Faker\Generator;
+
 trait SetsSeed
 {
     public function setSeed(int $seed): void
@@ -11,7 +13,9 @@ trait SetsSeed
         mt_srand($seed);
 
         if (property_exists($this, 'faker')) {
-            $this->faker->seed($seed);
+            /** @var Generator $faker */
+            $faker = $this->faker;
+            $faker->seed($seed);
         }
     }
 }

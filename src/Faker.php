@@ -11,17 +11,42 @@ use DefectiveCode\Faker\Workers\Pcntl;
 use DefectiveCode\Faker\Workers\Swoole;
 use DefectiveCode\Faker\Generators\Generator;
 
+/**
+ * @template TGenerator of Generator
+ *
+ * @method $this grid(int $size)
+ * @method $this height(int $minHeight, int $maxHeight)
+ * @method $this width(int $minWidth, int $maxWidth)
+ * @method $this withAlpha(bool $enabled = true)
+ * @method $this paragraphs(int $minParagraphs, int $maxParagraphs)
+ * @method $this sentences(int $minSentences, int $maxSentences)
+ * @method $this delimiter(string $delimiter = ',')
+ * @method $this enclosure(string $enclosure = '"')
+ * @method $this escape(string $escape = '')
+ * @method $this eol(string $eol = "\n")
+ * @method $this columns(int $minColumns = 5, int $maxColumns = 50)
+ * @method $this rows(int $minRows = 100, int $maxRows = 500)
+ * @method $this length(int $minLengthInBytes = 1024, int $maxLengthInBytes = 10240)
+ * @method $this withAttachment(Generator|string $attachmentGenerator = 'DefectiveCode\\Faker\\Generators\\Png', int $minAttachments = 1, int $maxAttachments = 3)
+ */
 class Faker
 {
+    /**
+     * @param  TGenerator  $generator
+     */
     public function __construct(public Generator $generator) {}
 
+    /**
+     * @param  array<mixed>  $arguments
+     * @return $this
+     */
     public function __call(string $name, array $arguments): self
     {
         if (! method_exists($this->generator, $name)) {
             throw new InvalidArgumentException("Method $name does not exist.");
         }
 
-        call_user_func([$this->generator, $name], ...$arguments);
+        $this->generator->{$name}(...$arguments);
 
         return $this;
     }
@@ -30,7 +55,7 @@ class Faker
      * @template G of Generator
      *
      * @param  class-string<G>  $generator
-     * @return Faker<G>&G
+     * @return self<G>
      */
     public static function make(string $generator): self
     {
@@ -41,6 +66,9 @@ class Faker
         return new self(new $generator($generator::getDefaultConfig()));
     }
 
+    /**
+     * @return $this
+     */
     public function basePath(string $basePath): self
     {
         $this->generator->config->basePath = $basePath;
@@ -48,6 +76,9 @@ class Faker
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function toDisk(Filesystem $filesystem): self
     {
         $this->generator->config->filesystem = $filesystem;
@@ -55,6 +86,10 @@ class Faker
         return $this;
     }
 
+    /**
+     * @param  array<string, mixed>  $diskOptions
+     * @return $this
+     */
     public function diskOptions(array $diskOptions): self
     {
         $this->generator->config->diskOptions = $diskOptions;
@@ -62,6 +97,9 @@ class Faker
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function concurrency(int $threads, ?int $coroutines = null): self
     {
         $this->generator->config->threads = $threads;
@@ -70,6 +108,9 @@ class Faker
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function count(int $count): self
     {
         $this->generator->config->count = $count;
@@ -79,6 +120,7 @@ class Faker
 
     /**
      * @param  Closure(int $seed, int $completedFiles, Generator $generator): string  $generator
+     * @return $this
      */
     public function nameGenerator(Closure $generator): self
     {
@@ -87,6 +129,9 @@ class Faker
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function seed(int $seed): self
     {
         $this->generator->config->seed = $seed;
@@ -96,6 +141,8 @@ class Faker
 
     public function generate(): void
     {
+        $this->filesystem();
+
         extension_loaded('swoole')
             ? new Swoole()->run($this)
             : new Pcntl()->run($this);
@@ -105,9 +152,15 @@ class Faker
     {
         $seed = sha1($this->generator->config->seed.':'.$completedFiles, true);
 
-        return unpack('Pseed', substr($seed, 0, 8))['seed'];
+        /** @var array{seed: int} $unpacked */
+        $unpacked = unpack('Pseed', substr($seed, 0, 8));
+
+        return $unpacked['seed'];
     }
 
+    /**
+     * @return Closure(int, int): void
+     */
     public function job(): Closure
     {
         return function (int $seed, int $completedFiles): void {
@@ -121,7 +174,7 @@ class Faker
             rewind($stream);
 
             $this->filesystem()->writeStream(
-                $this->generator->config->basePath.'/'.call_user_func($this->generator->config->nameGenerator, $seed, $completedFiles, $this->generator),
+                $this->generator->config->basePath.'/'.($this->generator->config->nameGenerator)($seed, $completedFiles, $this->generator),
                 $stream,
                 [
                     'mimetype' => $this->generator->config->contentType,
@@ -137,7 +190,7 @@ class Faker
 
     protected function filesystem(): Filesystem
     {
-        if (! $this->generator->config->filesystem) {
+        if (! isset($this->generator->config->filesystem)) {
             throw new InvalidArgumentException('No disk configuration provided. Call `toDisk` before generating files.');
         }
 

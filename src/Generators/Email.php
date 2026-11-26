@@ -24,7 +24,7 @@ class Email implements Generator
      */
     public function __construct(public Config $config) {}
 
-    public static function getDefaultConfig(): Config
+    public static function getDefaultConfig(): EmailConfig
     {
         return new EmailConfig([
             'contentType' => 'message/rfc822',
@@ -40,19 +40,15 @@ class Email implements Generator
             ->subject($this->faker->sentence())
             ->text($this->getBody());
 
-        $email = $this->attachAttachments($email)->toString();
+        $email = $this->attachAttachments($email);
 
-        $email = preg_replace_callback('/Message-ID: <([0-9a-z]{32})/', function ($matches) {
-            $seed = mt_rand();
-            $randomizer = new Randomizer(new Mt19937($seed));
-            $bytes = $randomizer->getBytes(16);
-            $hexString = bin2hex($bytes);
+        $randomizer = new Randomizer(new Mt19937(mt_rand()));
+        $domain = strstr($email->getFrom()[0]->getAddress(), '@');
+        $email->getHeaders()->addIdHeader('Message-ID', bin2hex($randomizer->getBytes(16)).$domain);
 
-            return str_replace($matches[1], $hexString, $matches[0]);
-        }, $email);
-
+        /** @var resource $stream */
         $stream = fopen('php://temp', 'w+');
-        fwrite($stream, $email);
+        fwrite($stream, $email->toString());
 
         return $stream;
     }
@@ -73,6 +69,10 @@ class Email implements Generator
         return $this;
     }
 
+    /**
+     * @param  class-string<Generator>|Generator  $attachmentGenerator
+     * @return $this
+     */
     public function withAttachment(Generator|string $attachmentGenerator = Png::class, int $minAttachments = 1, int $maxAttachments = 3): self
     {
         $this->config->attachmentGenerator = $attachmentGenerator;
@@ -110,7 +110,10 @@ class Email implements Generator
         return $email;
     }
 
-    protected function generateAttachment()
+    /**
+     * @return resource
+     */
+    protected function generateAttachment(): mixed
     {
         $generator = is_string($this->config->attachmentGenerator)
             ? new ($this->config->attachmentGenerator)(($this->config->attachmentGenerator)::getDefaultConfig())
