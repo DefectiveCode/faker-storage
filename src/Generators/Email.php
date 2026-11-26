@@ -40,20 +40,15 @@ class Email implements Generator
             ->subject($this->faker->sentence())
             ->text($this->getBody());
 
-        $email = $this->attachAttachments($email)->toString();
+        $email = $this->attachAttachments($email);
 
-        $email = preg_replace_callback('/Message-ID: <([0-9a-z]{32})/', function ($matches) {
-            $seed = mt_rand();
-            $randomizer = new Randomizer(new Mt19937($seed));
-            $bytes = $randomizer->getBytes(16);
-            $hexString = bin2hex($bytes);
-
-            return str_replace($matches[1], $hexString, $matches[0]);
-        }, $email);
+        $randomizer = new Randomizer(new Mt19937(mt_rand()));
+        $domain = strstr($email->getFrom()[0]->getAddress(), '@');
+        $email->getHeaders()->addIdHeader('Message-ID', bin2hex($randomizer->getBytes(16)).$domain);
 
         /** @var resource $stream */
         $stream = fopen('php://temp', 'w+');
-        fwrite($stream, (string) $email);
+        fwrite($stream, $email->toString());
 
         return $stream;
     }

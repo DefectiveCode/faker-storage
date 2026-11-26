@@ -1,7 +1,7 @@
 {
   "name": "defectivecode/faker-storage",
   "description": "A high-performance PHP package for generating and storing large volumes of fake data files.",
-  "type": "laravel",
+  "type": "library",
   "license": "MIT",
   "autoload": {
     "psr-4": {
@@ -33,9 +33,11 @@
     "laravel/pint": "^1.32.3",
     "phpstan/phpstan": "^2.3.7",
     "symfony/var-dumper": "^8.1.12",
-    "swoole/ide-helper": "^6.2.5",
-    "league/flysystem-local": "^3.31",
-    "league/mime-type-detection": "^1.16"
+    "swoole/ide-helper": "^6.2.5"
+  },
+  "conflict": {
+    "league/flysystem-local": "<3.25.1",
+    "league/mime-type-detection": "<1.16"
   },
   "suggest": {
     "ext-swoole": "Required for Swoole worker support for parallel file generation",

@@ -6,6 +6,7 @@ namespace DefectiveCode\Faker\Tests\Generators;
 
 use PHPUnit\Framework\Attributes\Test;
 use DefectiveCode\Faker\Tests\TestCase;
+use PHPUnit\Framework\Attributes\TestWith;
 use DefectiveCode\Faker\Generators\RandomImage;
 
 class RandomImageTest extends TestCase
@@ -18,74 +19,31 @@ class RandomImageTest extends TestCase
         $this->assertEquals('image/random', $config->contentType);
     }
 
+    /**
+     * @param  list<string>  $contentTypes
+     */
     #[Test]
-    public function itSetsContentTypeBasedOnWonFormat(): void
+    #[TestWith([false, ['image/avif', 'image/bmp', 'image/gif', 'image/jpeg', 'image/png', 'image/webp']])]
+    #[TestWith([true, ['image/avif', 'image/gif', 'image/png', 'image/webp']])]
+    public function itGeneratesAnImageInTheWonFormat(bool $withAlpha, array $contentTypes): void
     {
         $generator = $this->getGenerator();
 
+        $generator->withAlpha($withAlpha);
         $generator->height(10, 10);
         $generator->width(10, 10);
 
         $data = $generator->generate();
 
-        $this->assertContains($generator->config->contentType, [
-            'image/avif',
-            'image/bmp',
-            'image/gif',
-            'image/jpeg',
-            'image/png',
-            'image/webp',
-        ]);
-    }
+        rewind($data);
 
-    #[Test]
-    public function itSetsNameGeneratorBasedOnWonFormat(): void
-    {
-        $generator = $this->getGenerator();
+        $contents = (string) stream_get_contents($data);
+        $contentType = $generator->config->contentType;
 
-        $generator->height(10, 10);
-        $generator->width(10, 10);
-
-        $data = $generator->generate();
-
+        $this->assertContains($contentType, $contentTypes);
+        $this->assertSame($contentType, getimagesizefromstring($contents)['mime'] ?? null);
         $this->assertStringEndsWith(
-            '.'.substr($generator->config->contentType, strlen('image/')),
-            ($generator->config->nameGenerator)(1, 0, $generator)
-        );
-    }
-
-    #[Test]
-    public function itSetsContentTypeBasedOnWonFormatWithAlpha(): void
-    {
-        $generator = $this->getGenerator();
-
-        $generator->withAlpha(true);
-        $generator->height(10, 10);
-        $generator->width(10, 10);
-
-        $data = $generator->generate();
-
-        $this->assertContains($generator->config->contentType, [
-            'image/avif',
-            'image/gif',
-            'image/png',
-            'image/webp',
-        ]);
-    }
-
-    #[Test]
-    public function itSetsNameGeneratorBasedOnWonFormatWithAlpha(): void
-    {
-        $generator = $this->getGenerator();
-
-        $generator->withAlpha(true);
-        $generator->height(10, 10);
-        $generator->width(10, 10);
-
-        $data = $generator->generate();
-
-        $this->assertStringEndsWith(
-            '.'.substr($generator->config->contentType, strlen('image/')),
+            '.'.substr($contentType, strlen('image/')),
             ($generator->config->nameGenerator)(1, 0, $generator)
         );
     }

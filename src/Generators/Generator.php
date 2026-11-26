@@ -8,7 +8,7 @@ use DefectiveCode\Faker\Configs\Config;
 
 interface Generator
 {
-    public Config $config { get; set; }
+    public Config $config { get; }
 
     public function __construct(Config $config);
 

@@ -7,9 +7,12 @@ namespace DefectiveCode\Faker\Generators;
 use DefectiveCode\Faker\NameGenerator;
 use DefectiveCode\Faker\Configs\ImageWithAlphaConfig;
 
+/**
+ * @phpstan-type ImageFormat 'avif'|'bmp'|'gif'|'jpeg'|'png'|'webp'
+ */
 class RandomImage extends AlphaImage
 {
-    /** @var list<'avif'|'bmp'|'gif'|'jpeg'|'png'|'webp'> */
+    /** @var list<ImageFormat> */
     public static array $alphaImages = [
         'avif',
         'gif',
@@ -17,7 +20,7 @@ class RandomImage extends AlphaImage
         'webp',
     ];
 
-    /** @var list<'avif'|'bmp'|'gif'|'jpeg'|'png'|'webp'> */
+    /** @var list<ImageFormat> */
     public static array $images = [
         'avif',
         'bmp',
@@ -27,7 +30,7 @@ class RandomImage extends AlphaImage
         'webp',
     ];
 
-    /** @var 'avif'|'bmp'|'gif'|'jpeg'|'png'|'webp' */
+    /** @var ImageFormat */
     protected string $wonFormat;
 
     public static function getDefaultConfig(): ImageWithAlphaConfig

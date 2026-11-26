@@ -141,6 +141,8 @@ class Faker
 
     public function generate(): void
     {
+        $this->filesystem();
+
         extension_loaded('swoole')
             ? new Swoole()->run($this)
             : new Pcntl()->run($this);

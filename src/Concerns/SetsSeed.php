@@ -12,8 +12,10 @@ trait SetsSeed
     {
         mt_srand($seed);
 
-        if (property_exists($this, 'faker') && $this->faker instanceof Generator) {
-            $this->faker->seed($seed);
+        if (property_exists($this, 'faker')) {
+            /** @var Generator $faker */
+            $faker = $this->faker;
+            $faker->seed($seed);
         }
     }
 }

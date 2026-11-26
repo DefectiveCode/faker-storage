@@ -96,7 +96,7 @@ You may read the [documentation on our website](https://www.defectivecode.com/pa
 
 ## Development
 
-Use PHP 8.5 or newer with ext-gd, ext-pcntl and ext-swoole, Composer 2, and Bun 1.4.5. Install development dependencies:
+Use PHP 8.5 or newer with ext-fileinfo, ext-gd, ext-mbstring, ext-pcntl and ext-swoole, Composer 2, and Bun 1.4.5. Install development dependencies:
 
 ```sh
 composer install

@@ -149,18 +149,16 @@ class FakerTest extends TestCase
     }
 
     #[Test]
-    public function jobThrowsExceptionWhenNoFilesystemSet(): void
+    public function generateThrowsExceptionWhenNoFilesystemSet(): void
     {
         $faker = Faker::make(Text::class)
             ->seed(1)
             ->nameGenerator(NameGenerator::sequence('txt'));
 
-        $job = $faker->job();
-
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('No disk configuration provided. Call `toDisk` before generating files.');
 
-        $job(1, 0);
+        $faker->generate();
     }
 
     #[Test]
