@@ -71,7 +71,7 @@ composer require defectivecode/faker-storage
 
 ## Requirements
 
-- PHP >= 8.4
+- PHP >= 8.5
 - ext-gd (for image generation)
 - ext-swoole (optional, for better performance)
 - ext-pcntl (fallback for concurrency)

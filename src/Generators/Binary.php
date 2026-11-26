@@ -18,7 +18,7 @@ class Binary implements Generator
      */
     public function __construct(public Config $config) {}
 
-    public static function getDefaultConfig(): Config
+    public static function getDefaultConfig(): BinaryConfig
     {
         return new BinaryConfig([
             'contentType' => 'application/octet-stream',
@@ -28,6 +28,7 @@ class Binary implements Generator
 
     public function generate(): mixed
     {
+        /** @var resource $stream */
         $stream = fopen('php://temp', 'w+');
 
         for ($i = 0; $i < mt_rand($this->config->minLengthInBytes, $this->config->maxLengthInBytes); $i++) {

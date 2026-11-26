@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace DefectiveCode\Faker\Generators;
 
 use DefectiveCode\Faker\NameGenerator;
-use DefectiveCode\Faker\Configs\Config;
 use DefectiveCode\Faker\Configs\ImageWithAlphaConfig;
 
 class RandomImage extends AlphaImage
 {
-    /** @var string[] */
+    /** @var list<'avif'|'bmp'|'gif'|'jpeg'|'png'|'webp'> */
     public static array $alphaImages = [
         'avif',
         'gif',
@@ -18,7 +17,7 @@ class RandomImage extends AlphaImage
         'webp',
     ];
 
-    /** @var string[] */
+    /** @var list<'avif'|'bmp'|'gif'|'jpeg'|'png'|'webp'> */
     public static array $images = [
         'avif',
         'bmp',
@@ -28,9 +27,10 @@ class RandomImage extends AlphaImage
         'webp',
     ];
 
+    /** @var 'avif'|'bmp'|'gif'|'jpeg'|'png'|'webp' */
     protected string $wonFormat;
 
-    public static function getDefaultConfig(): Config
+    public static function getDefaultConfig(): ImageWithAlphaConfig
     {
         return new ImageWithAlphaConfig([
             'contentType' => 'image/random',

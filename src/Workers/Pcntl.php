@@ -6,9 +6,13 @@ namespace DefectiveCode\Faker\Workers;
 
 use Exception;
 use DefectiveCode\Faker\Faker;
+use DefectiveCode\Faker\Generators\Generator;
 
 class Pcntl implements Worker
 {
+    /**
+     * @param  Faker<covariant Generator>  $faker
+     */
     public function run(Faker $faker): void
     {
         pcntl_sigprocmask(SIG_BLOCK, [SIGCHLD]);

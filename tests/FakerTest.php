@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace DefectiveCode\Faker\Tests;
 
 use stdClass;
+use ReflectionMethod;
 use InvalidArgumentException;
 use DefectiveCode\Faker\Faker;
 use League\Flysystem\Filesystem;
@@ -29,7 +30,7 @@ class FakerTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('`stdClass` must implement the Generator interface.');
 
-        Faker::make(stdClass::class);
+        new ReflectionMethod(Faker::class, 'make')->invoke(null, stdClass::class);
     }
 
     #[Test]
@@ -144,11 +145,11 @@ class FakerTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Method invalid does not exist.');
 
-        Faker::make(Text::class)->invalid();
+        Faker::make(Text::class)->__call('invalid', []);
     }
 
     #[Test]
-    public function jobThrowsErrorWhenNoFilesystemSet(): void
+    public function jobThrowsExceptionWhenNoFilesystemSet(): void
     {
         $faker = Faker::make(Text::class)
             ->seed(1)
@@ -156,8 +157,8 @@ class FakerTest extends TestCase
 
         $job = $faker->job();
 
-        $this->expectException(\Error::class);
-        $this->expectExceptionMessage('Typed property DefectiveCode\Faker\Configs\Config::$filesystem must not be accessed before initialization');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('No disk configuration provided. Call `toDisk` before generating files.');
 
         $job(1, 0);
     }

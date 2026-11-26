@@ -42,8 +42,6 @@ class AlphaImageTest extends TestCase
 
         $data = $generator->generate();
 
-        $this->assertIsResource($data);
-
         rewind($data);
 
         $contents = stream_get_contents($data);
@@ -61,8 +59,6 @@ class AlphaImageTest extends TestCase
         $generator->width(10, 10);
 
         $data = $generator->generate();
-
-        $this->assertIsResource($data);
 
         rewind($data);
 

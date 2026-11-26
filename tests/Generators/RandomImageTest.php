@@ -28,7 +28,6 @@ class RandomImageTest extends TestCase
 
         $data = $generator->generate();
 
-        $this->assertIsResource($data);
         $this->assertContains($generator->config->contentType, [
             'image/avif',
             'image/bmp',
@@ -49,7 +48,10 @@ class RandomImageTest extends TestCase
 
         $data = $generator->generate();
 
-        $this->assertIsResource($data);
+        $this->assertStringEndsWith(
+            '.'.substr($generator->config->contentType, strlen('image/')),
+            ($generator->config->nameGenerator)(1, 0, $generator)
+        );
     }
 
     #[Test]
@@ -63,7 +65,6 @@ class RandomImageTest extends TestCase
 
         $data = $generator->generate();
 
-        $this->assertIsResource($data);
         $this->assertContains($generator->config->contentType, [
             'image/avif',
             'image/gif',
@@ -83,7 +84,10 @@ class RandomImageTest extends TestCase
 
         $data = $generator->generate();
 
-        $this->assertIsResource($data);
+        $this->assertStringEndsWith(
+            '.'.substr($generator->config->contentType, strlen('image/')),
+            ($generator->config->nameGenerator)(1, 0, $generator)
+        );
     }
 
     protected function getGenerator(): RandomImage

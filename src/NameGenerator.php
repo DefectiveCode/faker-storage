@@ -13,6 +13,9 @@ class NameGenerator
 {
     protected static string $currentGenerator = 'uuid';
 
+    /**
+     * @return Closure(int, int, Generator): string
+     */
     public static function default(string $extension): Closure
     {
         $currentGenerator = self::$currentGenerator;
@@ -21,7 +24,10 @@ class NameGenerator
             throw new InvalidArgumentException("Method `{$currentGenerator}` does not exist");
         }
 
-        return self::$currentGenerator($extension);
+        /** @var Closure(int, int, Generator): string $closure */
+        $closure = self::$currentGenerator($extension);
+
+        return $closure;
     }
 
     public static function setDefault(string $generator): void
@@ -33,11 +39,17 @@ class NameGenerator
         self::$currentGenerator = $generator;
     }
 
+    /**
+     * @return Closure(int, int, Generator): string
+     */
     public static function sequence(string $extension): Closure
     {
         return fn (int $seed, int $completedFiles, Generator $generator) => $completedFiles.'.'.$extension;
     }
 
+    /**
+     * @return Closure(int, int, Generator): string
+     */
     public static function uuid(string $extension): Closure
     {
         return fn (int $seed, int $completedFiles, Generator $generator) => Uuid::uuid4()->toString().'.'.$extension;

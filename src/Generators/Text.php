@@ -46,6 +46,7 @@ class Text implements Generator
 
     public function generate(): mixed
     {
+        /** @var resource $stream */
         $stream = fopen('php://temp', 'w+');
 
         for ($paragraphs = 0; $paragraphs < mt_rand($this->config->minParagraphs, $this->config->maxParagraphs); $paragraphs++) {

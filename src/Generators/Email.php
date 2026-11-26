@@ -24,7 +24,7 @@ class Email implements Generator
      */
     public function __construct(public Config $config) {}
 
-    public static function getDefaultConfig(): Config
+    public static function getDefaultConfig(): EmailConfig
     {
         return new EmailConfig([
             'contentType' => 'message/rfc822',
@@ -51,8 +51,9 @@ class Email implements Generator
             return str_replace($matches[1], $hexString, $matches[0]);
         }, $email);
 
+        /** @var resource $stream */
         $stream = fopen('php://temp', 'w+');
-        fwrite($stream, $email);
+        fwrite($stream, (string) $email);
 
         return $stream;
     }
@@ -73,6 +74,10 @@ class Email implements Generator
         return $this;
     }
 
+    /**
+     * @param  class-string<Generator>|Generator  $attachmentGenerator
+     * @return $this
+     */
     public function withAttachment(Generator|string $attachmentGenerator = Png::class, int $minAttachments = 1, int $maxAttachments = 3): self
     {
         $this->config->attachmentGenerator = $attachmentGenerator;
@@ -110,7 +115,10 @@ class Email implements Generator
         return $email;
     }
 
-    protected function generateAttachment()
+    /**
+     * @return resource
+     */
+    protected function generateAttachment(): mixed
     {
         $generator = is_string($this->config->attachmentGenerator)
             ? new ($this->config->attachmentGenerator)(($this->config->attachmentGenerator)::getDefaultConfig())

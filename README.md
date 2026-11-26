@@ -94,6 +94,34 @@ Faker::make(Email::class)
 
 You may read the [documentation on our website](https://www.defectivecode.com/packages/faker-storage).
 
+## Development
+
+Use PHP 8.5 or newer with ext-gd, ext-pcntl and ext-swoole, Composer 2, and Bun 1.4.5. Install development dependencies:
+
+```sh
+composer install
+test -f bun.lock
+bun install --frozen-lockfile
+```
+
+Run the tests and quality checks:
+
+```sh
+composer validate --strict
+composer test
+composer test -- --order-by random
+composer analyse -- --no-progress
+composer lint -- --test
+bun --bun run format:check
+bun --bun run package:check
+```
+
+Replay random test order with the reported seed by adding `--random-order-seed <seed>`. CI checks both lowest and stable Composer
+dependency resolutions on PHP 8.5, with randomized test order. The Swoole worker tests require ext-swoole.
+
+Use `composer lint` and `bun --bun run format` to apply formatting. Bun is pinned in `package.json`, and formatter scripts force the
+Bun runtime. Keep `bun.lock` tracked; `composer.lock` remains ignored for independent library dependency resolution.
+
 # Support Guidelines
 
 Thanks for choosing our open source package! Please take a moment to check out these support guidelines. They'll help

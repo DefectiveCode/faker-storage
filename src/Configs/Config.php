@@ -6,6 +6,7 @@ namespace DefectiveCode\Faker\Configs;
 
 use Closure;
 use League\Flysystem\Filesystem;
+use DefectiveCode\Faker\Generators\Generator;
 
 abstract class Config
 {
@@ -19,14 +20,19 @@ abstract class Config
 
     public string $contentType = 'application/octet-stream';
 
+    /** @var array<string, mixed> */
     public array $diskOptions = [];
 
     public Filesystem $filesystem;
 
+    /** @var Closure(int, int, Generator): string */
     public Closure $nameGenerator;
 
     public int $seed = 0;
 
+    /**
+     * @param  array<string, mixed>  $config
+     */
     public function __construct(array $config = [])
     {
         foreach ($config as $key => $value) {

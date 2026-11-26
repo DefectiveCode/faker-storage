@@ -29,6 +29,9 @@ trait InitializesWorker
         $this->cleanOutputDirectory();
     }
 
+    /**
+     * @return Faker<Text>
+     */
     protected function createFaker(int $count, string $basePath = '', ?int $coroutines = null): Faker
     {
         $faker = Faker::make(Text::class)
@@ -50,10 +53,13 @@ trait InitializesWorker
         return $faker;
     }
 
+    /**
+     * @return list<string>
+     */
     private function getFiles(string $subPath = ''): array
     {
         $path = $subPath ? $this->outputDir.'/'.$subPath : $this->outputDir;
-        $files = glob($path.'/*.txt');
+        $files = glob($path.'/*.txt') ?: [];
         sort($files);
 
         return $files;
